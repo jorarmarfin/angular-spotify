@@ -16,7 +16,7 @@ Artistas: any[]=[];
   buscar(termino:string){
     this.spotify.getArtista(termino)   
                 .subscribe((data:any)=>{
-                  this.Artistas = data.artists.items
+                  this.Artistas = data
                 });
   }
 
