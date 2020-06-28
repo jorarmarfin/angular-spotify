@@ -20,18 +20,12 @@ export class SpotifyService {
   }
 
   getNewReleases(){
-    return this.getQuery('https://api.spotify.com/v1/browse/new-releases?limit=20');
-    return this.httpclient.get('https://api.spotify.com/v1/browse/new-releases',{headers})
-                          .pipe(map((data)=>{
-                            return data['albums'].items;
-                          }));
+    return this.getQuery('browse/new-releases?limit=20')
+               .pipe(map(data=>data['albums'].items));;
   }
   getArtista(termino:string){
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer BQAsOb_T6x0AMRjwRxckan9MoX75WlwP_GtoUDyIKT2iNLXKv1oeig6jmQ6-9thdGtrq0OIrlUFb9BMjGcA'
-    });
-    return this.httpclient.get(`https://api.spotify.com/v1/search?query=${termino}&type=artist&offset=5&limit=10`,{headers})
-                          .pipe(map(data=>data['artists'].items));
+    return this.getQuery(`search?query=${termino}&type=artist&offset=5&limit=10`)
+               .pipe(map(data=>data['artists'].items));
 
   }
 
