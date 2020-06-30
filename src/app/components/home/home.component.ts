@@ -12,9 +12,12 @@ export class HomeComponent implements OnInit {
   paises:any[]=[];
   nuevasCanciones: any[] = [];
   loading:boolean;
+  error:boolean = false;
+  errormessage:string = '';
 
   constructor(private httpclient:HttpClient,private spotify:SpotifyService) { 
     this.loading = true;
+    this.error = false;
     this.httpclient.get('https://restcountries.eu/rest/v2/lang/es')
                    .subscribe((resp:any)=>{
       this.paises = resp;
@@ -23,6 +26,11 @@ export class HomeComponent implements OnInit {
                   .subscribe((data:any)=>{
                     this.nuevasCanciones = data;
                     this.loading = false;
+                  },(errorservicio)=>{
+                    this.error = true;
+                    this.loading = false;
+                    this.errormessage = errorservicio.error.error.message;
+                    console.log(errorservicio);
                   })
   }
 
